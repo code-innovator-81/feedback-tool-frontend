@@ -9,6 +9,10 @@ import Navbar from './components/Layout/Navbar';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import LoadingSpinner from './components/UI/LoadingSpinner';
+import FeedbackListPage from './pages/FeedbackListPage';
+import CreateFeedbackPage from './pages/CreateFeedbackPage';
+import FeedbackDetailPage from './pages/FeedbackDetailPage';
+
 
 import './App.css';
 
@@ -58,6 +62,30 @@ function AppContent() {
             element={
               <PublicRoute>
                 <RegisterPage />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/feedback" 
+            element={
+              <PublicRoute>
+                <FeedbackListPage />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/feedback/create" 
+            element={
+              <PublicRoute>
+                <CreateFeedbackPage />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/feedback/:id" 
+            element={
+              <PublicRoute>
+                <FeedbackDetailPage />
               </PublicRoute>
             } 
           />
