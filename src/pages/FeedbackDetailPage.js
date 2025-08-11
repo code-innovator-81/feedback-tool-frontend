@@ -1,4 +1,3 @@
-// pages/FeedbackDetailPage.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
@@ -42,8 +41,10 @@ const FeedbackDetailPage = () => {
     try {
       setLoading(true);
       const response = await apiClient.get(`/feedback/${id}`);
-      setFeedback(response.data.feedback);
+      
+      setFeedback(response.data);
       setComments(response.data.comments || []);
+      console.log('Feedback loaded:', response.data.feedback);
     } catch (error) {
       console.error('Failed to load feedback:', error);
       toast.error('Failed to load feedback details');

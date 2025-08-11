@@ -1,6 +1,3 @@
-// components/UI/LoadingSpinner.js
-import React from 'react';
-
 const LoadingSpinner = ({ size = 'large', text = 'Loading...' }) => {
   const sizeClasses = {
     small: 'h-4 w-4',

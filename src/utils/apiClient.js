@@ -1,4 +1,3 @@
-// utils/apiClient.js
 import axios from 'axios';
 
 // Create axios instance with base configuration

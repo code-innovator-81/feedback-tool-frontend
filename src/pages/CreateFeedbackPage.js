@@ -1,4 +1,3 @@
-// pages/CreateFeedbackPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
@@ -80,7 +79,7 @@ const CreateFeedbackPage = () => {
       });
 
       toast.success('Feedback submitted successfully!');
-      navigate(`/feedback/${response.data.feedback.id}`);
+      navigate(`/feedback/${response.data.id}`);
     } catch (error) {
       console.error('Submit feedback error:', error);
       

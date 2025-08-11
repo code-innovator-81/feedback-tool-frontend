@@ -1,4 +1,3 @@
-// pages/FeedbackListPage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
@@ -97,10 +96,9 @@ const FeedbackListPage = () => {
 
   const categories = [
     'All Categories',
-    'Bug Report',
-    'Feature Request',
-    'Improvement',
-    'General'
+    'bug',
+    'feature',
+    'improvement'
   ];
 
   useEffect(() => {

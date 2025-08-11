@@ -1,4 +1,3 @@
-// components/Comments/CommentSection.js
 import React, { useState, useRef } from 'react';
 import apiClient from '../../utils/apiClient';
 import { toast } from 'react-toastify';
@@ -8,7 +7,7 @@ import Comment from './Comment';
 
 const CommentSection = ({ 
   feedbackId, 
-  comments, 
+  comments = [], // Default empty array if undefined
   onCommentAdded, 
   onCommentUpdated, 
   onCommentDeleted 
@@ -17,46 +16,56 @@ const CommentSection = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
 
+  // Safe comment submission handler
   const handleCommentSubmit = async (content) => {
     try {
       setIsSubmitting(true);
-      
       const response = await apiClient.post(`/feedback/${feedbackId}/comments`, {
         content: content.trim()
       });
 
-      onCommentAdded(response.data.comment);
-      toast.success('Comment added successfully!');
-      
-      // Reset form if it has a reset method
+      // Verify response structure before calling handler
+      if (response.data?.content) {
+        onCommentAdded(response.data.content);
+        toast.success('Comment added successfully!');
+      } else {
+        throw new Error('Invalid comment response structure');
+      }
+
       if (formRef.current?.resetForm) {
         formRef.current.resetForm();
       }
     } catch (error) {
       console.error('Failed to add comment:', error);
-      const message = error.response?.data?.message || 'Failed to add comment. Please try again.';
+      const message = error.response?.data?.message || error.message || 'Failed to add comment. Please try again.';
       toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // Safe comment update handler
   const handleCommentUpdate = async (commentId, content) => {
     try {
       const response = await apiClient.put(`/comments/${commentId}`, {
         content: content.trim()
       });
 
-      onCommentUpdated(commentId, response.data.comment);
-      toast.success('Comment updated successfully!');
+      if (response.data?.comment) {
+        onCommentUpdated(commentId, response.data.comment);
+        toast.success('Comment updated successfully!');
+      } else {
+        throw new Error('Invalid comment update response');
+      }
     } catch (error) {
       console.error('Failed to update comment:', error);
-      const message = error.response?.data?.message || 'Failed to update comment. Please try again.';
+      const message = error.response?.data?.message || error.message || 'Failed to update comment. Please try again.';
       toast.error(message);
-      throw error; // Re-throw to let the comment component handle it
+      throw error;
     }
   };
 
+  // Safe comment deletion handler
   const handleCommentDelete = async (commentId) => {
     if (!window.confirm('Are you sure you want to delete this comment? This action cannot be undone.')) {
       return;
@@ -73,11 +82,14 @@ const CommentSection = ({
     }
   };
 
+  // Filter out any undefined/null comments
+  const validComments = comments.filter(comment => comment && comment.id);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-medium text-gray-900">
-          Comments ({comments.length})
+          Comments ({validComments.length})
         </h3>
       </div>
 
@@ -91,9 +103,9 @@ const CommentSection = ({
         />
       </div>
 
-      {/* Comments List */}
+      {/* Comments List with safe rendering */}
       <div className="space-y-6">
-        {comments.length === 0 ? (
+        {validComments.length === 0 ? (
           <div className="text-center py-12">
             <svg
               className="mx-auto h-12 w-12 text-gray-400"
@@ -114,7 +126,7 @@ const CommentSection = ({
             </p>
           </div>
         ) : (
-          comments.map((comment) => (
+          validComments.map((comment) => (
             <Comment
               key={comment.id}
               comment={comment}

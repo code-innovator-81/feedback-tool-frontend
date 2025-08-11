@@ -1,4 +1,3 @@
-// components/Comments/CommentForm.js
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 
 const CommentForm = forwardRef(({ onSubmit, isSubmitting, currentUser }, ref) => {
@@ -160,7 +159,7 @@ const CommentForm = forwardRef(({ onSubmit, isSubmitting, currentUser }, ref) =>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} class="comment-form bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         {showPreview ? (
           <div className="p-3 min-h-[120px] prose prose-sm max-w-none">
             {content.trim() ? (

@@ -1,5 +1,4 @@
 
-// components/UI/Pagination.js
 export const Pagination = ({ currentPage, lastPage, onPageChange, total, perPage }) => {
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, total);

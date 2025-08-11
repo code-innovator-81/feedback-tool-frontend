@@ -1,4 +1,3 @@
-// components/Comments/Comment.js
 import React, { useState } from 'react';
 
 const Comment = ({ comment, currentUser, onUpdate, onDelete }) => {
