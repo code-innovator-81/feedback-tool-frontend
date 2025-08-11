@@ -67,25 +67,25 @@ function AppContent() {
           <Route 
             path="/feedback" 
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <FeedbackListPage />
-              </PublicRoute>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/feedback/create" 
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <CreateFeedbackPage />
-              </PublicRoute>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/feedback/:id" 
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <FeedbackDetailPage />
-              </PublicRoute>
+              </ProtectedRoute>
             } 
           />
         </Routes>
